@@ -1,0 +1,108 @@
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
+<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
+<!-- * * * * * * * * * * and can be replaced. * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * Delete the template below * * * * * * * * * * -->
+<!-- * * * * * * * to get started with your project! * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<html>
+  <head>
+
+  </head>
+  <body>
+    <form #contactForm="ngForm" (ngSubmit)="onSubmit(contactForm)" novalidate>
+      <!--Nombre-->
+      <p>
+        <label for="nombre">Nombre </label><!--El campo nombre requiere de como minimo 3 letras, mayusculas y minusculas, no permite otros caracteres-->
+        <input type="text" id="nombre" name="nombre" required minlength="3"  pattern="^[a-zA-Z]+$" #nombre="ngModel"  [(ngModel)]="contact.nombre">
+      </p>
+      <div *ngIf="!nombre?.valid && (nombre?.dirty || nombre?.touched)">
+        El nombre no es correcto
+        <div *ngIf="nombre.errors.required">
+          El campo es obligatorio
+       </div>
+       <div *ngIf="nombre.errors.minlength">
+         La longitut minima es {{nombre.errors.minlength?.requiredLength}}
+       </div>
+      </div>
+      <!--/Nombre-->
+      <!--Apellido-->
+      <p>
+        <label for="apellido">Apellido </label><!--EL campo apellido accepta un maximo de 10 letras, mayusculas o minusculas, no acepta otros caracteres-->
+        <input type="text" id="apellido" name="apellido"  required maxlength="10" pattern="^[a-zA-Z]+$" #apellido="ngModel" [(ngModel)]="contact.apellido">
+      </p>
+      <div *ngIf="!apellido?.valid && (apellido?.dirty || apellido?.touched)">
+        El apellido no es correcto
+        <div *ngIf="apellido.errors.required">
+          El campo es obligatorio
+        </div>
+      </div>
+      <!--/Apellido-->
+      <!--Correo-->
+      <p>
+        <label for="correo">Correo </label><!--El campo correo verifica que el correo tenga un formato correcto -->
+        <input type="email" id="correo" name="correo" required email #correo="ngModel" [(ngModel)]="contact.correo">
+      </p>
+      <div *ngIf="!correo?.valid && (correo?.dirty || correo?.touched)">
+        El correo no es correcto
+        <div *ngIf="correo.errors.required">
+          El campo correo es obligatorio
+        </div>
+      </div>
+      <!--/Correo-->
+      <!--Genero-->
+      <p>
+        <label for="genero">Genero </label><!--El genero deja escojer entre 2 opciones, la opcion predeterminada es Hombre-->
+        <input type="radio" value="hombre" id="genero" name="genero" [(ngModel)]="contact.genero"> Hombre
+        <input type="radio" value="mujer" id="genero" name="genero" [(ngModel)]="contact.genero"> Mujer
+      </p>
+      <!--/Genero-->
+      <!--Contraseña-->
+      <p>
+        <label for="contrasena">Contraseña </label><!--El campoco contraseña debe ser de 8 a 16 caracteres y incluir minusculas,mayusculas y numeros.-->
+        <input type="password" id="contrasena" name="contrasena" required minlength="8"  pattern="^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$"   #contrasena="ngModel" [(ngModel)]="contact.contrasena">
+        <br><span class="contrasena">Utiliza entre 8 y 16 caracteres con una combinacion de letras mayusculas/minisculas y numeros  </span>
+      </p>
+      <div *ngIf="!contrasena?.valid && (contrasena?.dirty || contrasena?.touched)">
+        La contrasena no es correcto
+        <div *ngIf="contrasena.errors.required">
+          El campo contrasena es obligatorio
+        </div>
+      </div>
+      <!--/Contraseña-->
+      <!--Confirmacio Contraseña-->
+      <p>
+        <label for="confirmacion_contrasena"> Confirmacion Contraseña </label><!--El campo confirmacion contraseña verifica que la cadena introducida es la misma que la del campo contraseña-->
+        <input type="password" id="confirmacion_contrasena" name="confirmacion_contrasena" required pattern="^({{contrasena?.value}})$" #confirmacion_contrasena="ngModel" [(ngModel)]="contact.confirmacion_contrasena">
+      </p>
+      <div *ngIf=" contrasena?.valid && (confirmacion_contrasena?.dirty || confirmacion_contrasena?.touched)">
+        <div *ngIf="!(contrasena?.value === confirmacion_contrasena?.value)">
+          El campo de confirmacion contrasena debe coincidir con la contraseña.
+        </div>
+        <div class="confirmacion_contrasena_correcta" *ngIf="(contrasena?.value === confirmacion_contrasena?.value)">
+          Las contraseñas coinciden.
+        </div>
+      </div>
+      <!--/Confirmacio contraseña-->
+        <p>
+          <input type="checkbox" id="isokpubli" name="isokpubli" [(ngModel)]="contact.isokpubli">
+          <label for="isokpubli">Desea recibir informacion al correo?</label>
+        </p>
+        <p><!--Cuando "envia" muestra el resultado por la consola del navegador-->
+          <button type="submit" [disabled]="!contactForm.valid">Enviar</button>
+        </p>
+    </form>
+  </body>
+</html>
+
+ 
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * The content above * * * * * * * * * * * -->
+<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
+<!-- * * * * * * * * * * and can be replaced. * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * End of Placeholder * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+
+
